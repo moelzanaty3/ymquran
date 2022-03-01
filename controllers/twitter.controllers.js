@@ -10,7 +10,7 @@ const twitterClient = new TwitterClient({ apiKey, apiSecret, accessToken, access
 const tweet = async () => {
   try {
     const text = await alquranControllers.getAyah()
-    await twitterClient.tweets.statusesUpdate({ status: text.slice(0, 100) })
+    await twitterClient.tweets.statusesUpdate({ status: text })
   } catch (err) {
     console.error(err)
   }
