@@ -14,10 +14,10 @@ provider:
   region: us-east-1
   # service wide environment variables
   environment:
-    TWITTER_API_KEY: ${file(./env.json):TWITTER_API_KEY}
-    TWITTER_API_SECRET: ${file(./env.json):TWITTER_API_SECRET}
-    TWITTER_ACCESS_TOKEN: ${file(./env.json):TWITTER_ACCESS_TOKEN}
-    TWITTER_ACCESS_TOKEN_SECRET: ${file(./env.json):TWITTER_ACCESS_TOKEN_SECRET}
+    TWITTER_API_KEY: ${param:TWITTER_API_KEY}
+    TWITTER_API_SECRET: ${param:TWITTER_API_SECRET}
+    TWITTER_ACCESS_TOKEN: ${param:TWITTER_ACCESS_TOKEN}
+    TWITTER_ACCESS_TOKEN_SECRET: ${param:TWITTER_ACCESS_TOKEN_SECRET}
     
 
 functions:
