@@ -6,7 +6,7 @@ module.exports.run = async (event, context, callback) => {
     const response = {
       statusCode: 200,
       body: JSON.stringify({
-        message: 'We tweeted an Ayah! Our bot completed successfully!',
+        message: 'We tweeted an Ayah! Our ymQuran bot completed successfully!',
         data: event
       })
     }
