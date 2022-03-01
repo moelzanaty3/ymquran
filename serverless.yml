@@ -27,5 +27,5 @@ functions:
     memorySize: 128 
     timeout: 10
     events:
-      # Invoke Lambda function every 5 minutes
-      - schedule: rate(5 minutes)
+      # Invoke Lambda function every 15 minutes
+      - schedule: rate(15 minutes)
