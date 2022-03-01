@@ -1,13 +1,18 @@
 const express = require('express')
 const axios = require('axios')
 const { TwitterClient } = require('twitter-api-client')
-const config = require('./config')
+const cron = require('node-cron')
+const morgan = require('morgan')
+
+const { accessToken, apiKey, apiSecret, accessTokenSecret } = require('./config')
+
 const utils = require('./utils')
 
-console.log(config)
-console.log(utils)
+// https://github.com/PLhery/node-twitter-api-v2/blob/master/doc/examples.md#Createaclient
+const twitterClient = new TwitterClient({ apiKey, apiSecret, accessToken, accessTokenSecret })
 
 const app = express()
+app.use(morgan('short'))
 const port = process.env.PORT || 8080
 
 const getAyah = async () => {
@@ -19,11 +24,10 @@ const getAyah = async () => {
     if (data && data.text) {
       const ayahText = data.text
       const ayahSurah = data.surah.name
-      const ayahNumber = data.number
-      tweet = `${ayahSurah} (${ayahNumber}) - {${ayahText}}`
+      const ayahNumber = data.surah.numberOfAyahs
+      tweet = `{${ayahText}} - ${ayahSurah} (${ayahNumber})`
     }
     return tweet
-    //TODO send the tweet
   } catch (err) {
     console.error(err)
   }
@@ -33,11 +37,17 @@ const tweet = async () => {
   try {
     const text = await getAyah()
     await twitterClient.tweets.statusesUpdate({ status: text })
-    console.log('Tweeted!')
   } catch (err) {
     console.error(err)
   }
 }
+
+// Schedule tasks to be run on the server.
+cron.schedule('*/10 * * * *', function () {
+  console.log('tweet a tweet every 10 minute - ' + Date.now())
+  tweet()
+})
+
 
 app.get('/', async (req, res) => {
   res.send('Hello from YM Quran Bot 🌍')
