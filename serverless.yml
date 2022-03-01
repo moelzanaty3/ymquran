@@ -1,0 +1,31 @@
+org: mohammedelzanaty
+app: twitter-ymquran-bot-aws
+service: twitter-ymquran-bot-aws
+
+frameworkVersion: '3'
+
+# package:
+#   exclude:
+#     - 'node_modules/**'
+
+provider:
+  name: aws
+  runtime: nodejs14.x
+  region: us-east-1
+  # service wide environment variables
+  environment:
+    TWITTER_API_KEY: ${file(./env.json):TWITTER_API_KEY}
+    TWITTER_API_SECRET: ${file(./env.json):TWITTER_API_SECRET}
+    TWITTER_ACCESS_TOKEN: ${file(./env.json):TWITTER_ACCESS_TOKEN}
+    TWITTER_ACCESS_TOKEN_SECRET: ${file(./env.json):TWITTER_ACCESS_TOKEN_SECRET}
+    
+
+functions:
+  tweetAyahQuran:
+    handler: index.run
+    description: Tweets Ayah Quran on a Schedule
+    memorySize: 128 
+    timeout: 10
+    events:
+      # Invoke Lambda function every 5 minutes
+      - schedule: rate(5 minutes)

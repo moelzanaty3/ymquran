@@ -1,5 +1,5 @@
 {
-  "name": "ymquran",
+  "name": "twitter-ymquran-bot-aws",
   "version": "1.0.0",
   "main": "index.js",
   "repository": "https://github.com/mohammedelzanaty/ymquran.git",
@@ -8,18 +8,16 @@
   "dependencies": {
     "axios": "^0.26.0",
     "dotenv": "^16.0.0",
-    "express": "^4.17.3",
-    "morgan": "^1.10.0",
-    "node-cron": "^3.0.0",
+    "serverless": "^3.5.1",
     "twitter-api-client": "^1.5.2"
   },
   "devDependencies": {
-    "nodemon": "^2.0.15",
     "prettier": "^2.5.1"
   },
   "scripts": {
-    "dev": "nodemon src/index.js",
-    "start": "node src/index.js",
+    "clean": "rm -rf .serverless",
+    "dev": "serverless invoke local --function rateHandler",
+    "deploy": "yarn clean && serverless deploy",
     "format": "prettier --write 'src/**/*.{ts,tsx,js,jsx}'"
   }
 }
